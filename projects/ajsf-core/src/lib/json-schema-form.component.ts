@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
+import { Subscription } from 'rxjs';
 
 import {
   ChangeDetectionStrategy,
@@ -8,6 +9,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -69,7 +71,7 @@ import { WidgetLibraryService } from './widget-library/widget-library.service';
   templateUrl: './json-schema-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges, OnInit {
+export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges, OnInit, OnDestroy {
   debugOutput: any; // Debug information, if requested
   formValueSubscription: any = null;
   formInitialized = false;
@@ -85,6 +87,7 @@ export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges,
       widgets: null, form: null, model: null, JSONSchema: null, UISchema: null,
       formData: null, loadExternalAssets: null, debug: null,
     };
+    private subscriptions: Subscription[] = [];
 
   // Recommended inputs
   @Input() schema: any; // The JSON Schema
@@ -191,6 +194,10 @@ export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges,
         this.loadAssets();
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   writeValue(value: any) {
@@ -712,17 +719,25 @@ export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges,
       // }
 
       // Subscribe to form changes to output live data, validation, and errors
-      this.jsf.dataChanges.subscribe(data => {
-        this.onChanges.emit(this.objectWrap ? data['1'] : data);
-        if (this.formValuesInput && this.formValuesInput.indexOf('.') === -1) {
-          this[`${this.formValuesInput}Change`].emit(this.objectWrap ? data['1'] : data);
-        }
-      });
+      this.subscriptions.push(
+        this.jsf.dataChanges.subscribe(data => {
+          this.onChanges.emit(this.objectWrap ? data['1'] : data);
+          if (this.formValuesInput && this.formValuesInput.indexOf('.') === -1) {
+            this[`${this.formValuesInput}Change`].emit(this.objectWrap ? data['1'] : data);
+          }
+        })
+      );
 
       // Trigger change detection on statusChanges to show updated errors
-      this.jsf.formGroup.statusChanges.subscribe(() => this.changeDetector.markForCheck());
-      this.jsf.isValidChanges.subscribe(isValid => this.isValid.emit(isValid));
-      this.jsf.validationErrorChanges.subscribe(err => this.validationErrors.emit(err));
+      this.subscriptions.push(
+        this.jsf.formGroup.statusChanges.subscribe(() => this.changeDetector.markForCheck())
+      );
+      this.subscriptions.push(
+        this.jsf.isValidChanges.subscribe(isValid => this.isValid.emit(isValid))
+      );
+      this.subscriptions.push(
+        this.jsf.validationErrorChanges.subscribe(err => this.validationErrors.emit(err))
+      );
 
       // Output final schema, final layout, and initial data
       this.formSchema.emit(this.jsf.schema);

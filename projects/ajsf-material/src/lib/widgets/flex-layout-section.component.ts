@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { JsonSchemaFormService } from '@ajsf/core';
 
 @Component({
@@ -141,6 +141,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
     .expandable > .legend:before { content: '▶'; padding-right: .3em; }
     .expanded > .legend:before { content: '▼'; padding-right: .2em; }
   `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlexLayoutSectionComponent implements OnInit {
   formControl: AbstractControl;

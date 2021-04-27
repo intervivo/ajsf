@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { JsonSchemaFormService } from '@ajsf/core';
 
@@ -68,6 +68,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
     .checkbox-name { white-space: nowrap; }
     mat-error { font-size: 75%; }
   `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialCheckboxComponent implements OnInit {
   formControl: AbstractControl;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { JsonSchemaFormService } from '@ajsf/core';
 
@@ -8,6 +8,8 @@ import { JsonSchemaFormService } from '@ajsf/core';
   // tslint:disable-next-line:component-selector
   selector: 'material-one-of-widget',
   template: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class MaterialOneOfComponent implements OnInit {
   formControl: AbstractControl;

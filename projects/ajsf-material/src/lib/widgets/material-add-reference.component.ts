@@ -15,7 +15,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
         <span *ngIf="options?.title" [innerHTML]="buttonText"></span>
       </button>
     </section>`,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialAddReferenceComponent implements OnInit {
   options: any;

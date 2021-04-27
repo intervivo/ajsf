@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit, Optional } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { JsonSchemaFormService, dateToString } from '@ajsf/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -64,6 +64,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     ::ng-deep json-schema-form mat-form-field .mat-form-field-wrapper .mat-form-field-flex
       .mat-form-field-infix { width: initial; }
   `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialDatepickerComponent implements OnInit {
   formControl: AbstractControl;

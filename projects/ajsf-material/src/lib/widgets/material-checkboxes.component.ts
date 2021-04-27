@@ -1,6 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 import { buildTitleMap } from '@ajsf/core';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { JsonSchemaFormService, TitleMapItem } from '@ajsf/core';
 
 // TODO: Change this to use a Selection List instead?
@@ -50,6 +50,7 @@ import { JsonSchemaFormService, TitleMapItem } from '@ajsf/core';
     .checkbox-name { white-space: nowrap; }
     mat-error { font-size: 75%; }
   `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialCheckboxesComponent implements OnInit {
   formControl: AbstractControl;

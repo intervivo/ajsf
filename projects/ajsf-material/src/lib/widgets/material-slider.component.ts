@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { JsonSchemaFormService } from '@ajsf/core';
 
 @Component({
@@ -29,6 +29,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
     <mat-error *ngIf="options?.showErrors && options?.errorMessage"
       [innerHTML]="options?.errorMessage"></mat-error>`,
     styles: [` mat-error { font-size: 75%; } `],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialSliderComponent implements OnInit {
   formControl: AbstractControl;

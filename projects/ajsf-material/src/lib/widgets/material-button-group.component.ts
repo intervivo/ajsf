@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { JsonSchemaFormService, buildTitleMap } from '@ajsf/core';
 
 
@@ -34,6 +34,7 @@ import { JsonSchemaFormService, buildTitleMap } from '@ajsf/core';
         [innerHTML]="options?.errorMessage"></mat-error>
     </div>`,
     styles: [` mat-error { font-size: 75%; } `],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialButtonGroupComponent implements OnInit {
   formControl: AbstractControl;

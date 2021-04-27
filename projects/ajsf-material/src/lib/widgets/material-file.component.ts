@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { JsonSchemaFormService } from '@ajsf/core';
 
 // TODO: Add this control
@@ -8,6 +8,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
   // tslint:disable-next-line:component-selector
   selector: 'material-file-widget',
   template: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialFileComponent implements OnInit {
   formControl: AbstractControl;

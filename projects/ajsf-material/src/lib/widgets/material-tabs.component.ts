@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { JsonSchemaFormService } from '@ajsf/core';
 
 @Component({
@@ -24,6 +24,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
         [layoutNode]="layoutItem"></select-framework-widget>
     </div>`,
   styles: [` a { cursor: pointer; } `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialTabsComponent implements OnInit {
   options: any;

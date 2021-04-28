@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import { Subscription } from 'rxjs';
-
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -29,7 +29,7 @@ import { JsonPointer } from './shared/jsonpointer.functions';
 import { JsonSchemaFormService } from './json-schema-form.service';
 import { resolveSchemaReferences } from './shared/json-schema.functions';
 import { WidgetLibraryService } from './widget-library/widget-library.service';
-
+import { STATUS_DELAY } from './shared/settings';
 
 /**
  * @module 'JsonSchemaFormComponent' - Angular JSON Schema Form
@@ -730,8 +730,12 @@ export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges,
 
       // Trigger change detection on statusChanges to show updated errors
       this.subscriptions.push(
-        this.jsf.formGroup.statusChanges.subscribe(() => this.changeDetector.markForCheck())
+        this.jsf.formGroup.statusChanges.pipe(
+          debounceTime(STATUS_DELAY),
+          distinctUntilChanged()
+        ).subscribe(() => this.changeDetector.markForCheck())
       );
+
       this.subscriptions.push(
         this.jsf.isValidChanges.subscribe(isValid => this.isValid.emit(isValid))
       );

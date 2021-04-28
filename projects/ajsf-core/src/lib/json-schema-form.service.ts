@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 import cloneDeep from 'lodash/cloneDeep';
 import Ajv from 'ajv';
 import jsonDraft6 from 'ajv/lib/refs/json-schema-draft-06.json';
@@ -25,6 +27,7 @@ import {
   isObject,
   JsonPointer
 } from './shared';
+import { STATUS_DELAY } from './shared/settings';
 import {
   deValidationMessages,
   enValidationMessages,
@@ -60,9 +63,7 @@ export class JsonSchemaFormService {
   tpldata: any = {};
 
   ajvOptions: any = {
-    allErrors: true,
-    jsonPointers: true,
-    unknownFormats: 'ignore'
+    allErrors: true
   };
   ajv: any = new Ajv(this.ajvOptions); // AJV: Another JSON Schema Validator
   validateFormData: any = null; // Compiled AJV function to validate active form's schema
@@ -148,6 +149,9 @@ export class JsonSchemaFormService {
   constructor() {
     this.setLanguage(this.language);
     this.ajv.addMetaSchema(jsonDraft6);
+    this.ajv.addVocabulary([
+      'mask', 'extendRefs', 'notitle', 'titleMap', 'readonly'
+    ]);
   }
 
   setLanguage(language: string = 'en-US') {
@@ -287,8 +291,14 @@ export class JsonSchemaFormService {
       if (this.formValueSubscription) {
         this.formValueSubscription.unsubscribe();
       }
-      this.formValueSubscription = this.formGroup.valueChanges.subscribe(
-        formValue => this.validateData(formValue)
+      this.formValueSubscription = this.formGroup.valueChanges.pipe(
+        debounceTime(STATUS_DELAY),
+        distinctUntilChanged()
+      ).subscribe(
+        formValue => {
+          this.validateData(formValue);
+          console.log("VALIDATE DATA");
+        }
       );
     }
   }

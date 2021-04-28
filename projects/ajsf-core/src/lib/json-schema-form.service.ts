@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import Ajv from 'ajv';
 import jsonDraft6 from 'ajv/lib/refs/json-schema-draft-06.json';
 import {

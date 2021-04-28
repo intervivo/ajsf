@@ -1,6 +1,4 @@
-import cloneDeep from 'lodash/cloneDeep';
-import filter from 'lodash/filter';
-import map from 'lodash/map';
+import { cloneDeep, filter, map } from 'lodash-es';
 import {
   AbstractControl,
   FormArray,

@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import { forEach, hasOwn, mergeFilteredObject } from './utility.functions';
 import {
   getType,

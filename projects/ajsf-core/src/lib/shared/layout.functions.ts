@@ -1,5 +1,4 @@
-import uniqueId from 'lodash/uniqueId';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep, uniqueId } from 'lodash-es';
 import {
   checkInlineType,
   getFromSchema,

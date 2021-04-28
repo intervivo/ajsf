@@ -295,10 +295,7 @@ export class JsonSchemaFormService {
         debounceTime(STATUS_DELAY),
         distinctUntilChanged()
       ).subscribe(
-        formValue => {
-          this.validateData(formValue);
-          console.log("VALIDATE DATA");
-        }
+        formValue => this.validateData(formValue)
       );
     }
   }

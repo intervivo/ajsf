@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit} from '@angular/core';
 import {isDefined, JsonSchemaFormService} from '@ajsf/core';
 import { cloneDeep } from 'lodash-es';
 
@@ -7,6 +7,7 @@ import { cloneDeep } from 'lodash-es';
   selector: 'material-design-framework',
   templateUrl: './material-design-framework.component.html',
   styleUrls: ['./material-design-framework.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class MaterialDesignFrameworkComponent implements OnInit, OnChanges {
   frameworkInitialized = false;

@@ -18,7 +18,7 @@ import { JsonSchemaFormService } from '../json-schema-form.service';
       <span *ngIf="options?.icon" [class]="options?.icon"></span>
       <span *ngIf="options?.title" [innerHTML]="buttonText"></span>
     </button>`,
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddReferenceComponent implements OnInit {
   options: any;

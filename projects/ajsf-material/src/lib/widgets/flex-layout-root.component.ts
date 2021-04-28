@@ -22,7 +22,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
         [layoutIndex]="(layoutIndex || []).concat(i)"
         [layoutNode]="layoutNode"></select-framework-widget>
     <div>`,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlexLayoutRootComponent {
   @Input() dataIndex: number[];

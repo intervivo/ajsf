@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component, ComponentFactoryResolver, ComponentRef, Input,
   OnChanges, OnInit, ViewChild, ViewContainerRef
 } from '@angular/core';
@@ -9,6 +10,7 @@ import { JsonSchemaFormService } from '../json-schema-form.service';
   // tslint:disable-next-line:component-selector
   selector: 'select-widget-widget',
   template: `<div #widgetContainer></div>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectWidgetComponent implements OnChanges, OnInit {
   newComponent: ComponentRef<any> = null;

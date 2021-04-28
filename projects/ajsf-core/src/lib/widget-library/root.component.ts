@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { JsonSchemaFormService } from '../json-schema-form.service';
 
 
@@ -46,6 +46,7 @@ import { JsonSchemaFormService } from '../json-schema-form.service';
       position: relative; z-index: 20;
     }
   `],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RootComponent {
   options: any;

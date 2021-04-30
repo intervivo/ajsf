@@ -8,6 +8,10 @@ export function fixAngularFlex() {
     if (key === 'layout-gap' && (value === null || value === undefined)) {
       value = '0px';
     }
+    /// matcher = {element: flex-layout-root-widget, key: "layout", value: null}
+    if (key === 'layout' && (value === null || value === undefined)) {
+      value = 'column';
+    }
     MediaMarshallerUpdateElement.apply(this, [element, key, value]);
   };
 }

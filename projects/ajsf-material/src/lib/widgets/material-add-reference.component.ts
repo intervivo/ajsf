@@ -10,7 +10,7 @@ import { JsonSchemaFormService } from '@ajsf/core';
       <button mat-raised-button *ngIf="showAddButton"
         [color]="options?.color || 'accent'"
         [disabled]="options?.readonly"
-        (click)="addItem($event)">
+        (click)="addItem($event)" style="margin:10px 0;">
         <span *ngIf="options?.icon" [class]="options?.icon"></span>
         <span *ngIf="options?.title" [innerHTML]="buttonText"></span>
       </button>

@@ -12,8 +12,10 @@ import { JsonSchemaFormService } from '@ajsf/core';
       [color]="options?.color || 'primary'"
       [id]="'control' + layoutNode?._id"
       labelPosition="after"
+      style="padding: 4px 0;"
       [name]="controlName"
-      (blur)="options.showErrors = true">
+      (blur)="options.showErrors = true"
+      (change)="updateValue($event)">
       <span *ngIf="options?.title"
         class="checkbox-name"
         [style.display]="options?.notitle ? 'none' : ''"
@@ -104,7 +106,8 @@ export class MaterialCheckboxComponent implements OnInit {
 
   updateValue(event) {
     this.options.showErrors = true;
-    this.jsf.updateValue(this, event.checked ? this.trueValue : this.falseValue);
+    const value = event.checked ? this.trueValue : this.falseValue;
+    this.jsf.updateValue(this, value);
   }
 
   get isChecked() {

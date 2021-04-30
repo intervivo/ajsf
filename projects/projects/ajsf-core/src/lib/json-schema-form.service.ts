@@ -663,6 +663,7 @@ export class JsonSchemaFormService {
       ctx.formControl.markAsDirty();
     }
     ctx.layoutNode.value = value;
+
     // Set values of any related controls in copyValueTo array
     if (isArray(ctx.options.copyValueTo)) {
       for (const item of ctx.options.copyValueTo) {
@@ -830,9 +831,8 @@ export class JsonSchemaFormService {
     }
 
     // Add the new layoutNode to the form layout
-    this.layout = cloneDeep(
-      JsonPointer.insert(this.layout, this.getLayoutPointer(ctx), newLayoutNode)
-    );
+    JsonPointer.insert(this.layout, this.getLayoutPointer(ctx), newLayoutNode);
+
     return true;
   }
 
@@ -886,9 +886,7 @@ export class JsonSchemaFormService {
     }
 
     // Remove layoutNode from layout
-    this.layout = cloneDeep(
-      JsonPointer.remove(this.layout, this.getLayoutPointer(ctx))
-    );
+    JsonPointer.remove(this.layout, this.getLayoutPointer(ctx));
     return true;
   }
 }

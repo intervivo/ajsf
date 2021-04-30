@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash-es';
   selector: 'material-design-framework',
   templateUrl: './material-design-framework.component.html',
   styleUrls: ['./material-design-framework.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class MaterialDesignFrameworkComponent implements OnInit, OnChanges {
   frameworkInitialized = false;
@@ -24,6 +24,7 @@ export class MaterialDesignFrameworkComponent implements OnInit, OnChanges {
   @Input() dataIndex: number[];
 
   constructor(
+    private changeDetector: ChangeDetectorRef,
     private jsf: JsonSchemaFormService
   ) {
   }
@@ -45,7 +46,7 @@ export class MaterialDesignFrameworkComponent implements OnInit, OnChanges {
       // For removable list items, allow removing any item
       this.layoutNode.arrayItemType === 'list' ? true :
         // For removable tuple items, only allow removing last item in list
-        this.layoutIndex[this.layoutIndex.length - 1] === this.parentArray.items.length - 2;        
+        this.layoutIndex[this.layoutIndex.length - 1] === this.parentArray.items.length - 2;
   }
 
   ngOnInit() {

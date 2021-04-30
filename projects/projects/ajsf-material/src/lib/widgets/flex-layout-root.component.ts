@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef,Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { JsonSchemaFormService } from '@ajsf/core';
-import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,7 +12,11 @@ import { Subscription } from 'rxjs';
       [style.flex-shrink]="getFlexAttribute(layoutNode, 'flex-shrink')"
       [style.flex-basis]="getFlexAttribute(layoutNode, 'flex-basis')"
       [style.align-self]="(layoutNode?.options || {})['align-self']"
-      [style.order]="layoutNode?.options?.order">
+      [style.order]="layoutNode?.options?.order"
+      [fxFlex]="layoutNode?.options?.fxFlex"
+      [fxFlexOrder]="layoutNode?.options?.fxFlexOrder"
+      [fxFlexOffset]="layoutNode?.options?.fxFlexOffset"
+      [fxFlexAlign]="layoutNode?.options?.fxFlexAlign">
       <select-framework-widget *ngIf="showWidget(layoutNode)"
         [dataIndex]="layoutNode?.arrayItem ? (dataIndex || []).concat(i) : (dataIndex || [])"
         [layoutIndex]="(layoutIndex || []).concat(i)"
@@ -27,22 +30,9 @@ export class FlexLayoutRootComponent {
   @Input() layout: any[];
   @Input() isFlexItem = false;
 
-  private subscription: Subscription;
-
   constructor(
-    private cdr: ChangeDetectorRef,
     private jsf: JsonSchemaFormService
   ) { }
-
-  ngOnInit() {
-    this.subscription = this.jsf.dataChanges.subscribe(() =>
-      this.cdr.markForCheck()
-    );
-  }
-
-  ngOnDestroy() {
-    if (!!this.subscription) {this.subscription.unsubscribe();}
-  }
 
   removeItem(item) {
     this.jsf.removeItem(item);
